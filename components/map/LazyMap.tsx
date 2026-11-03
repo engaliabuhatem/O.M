@@ -4,6 +4,7 @@ import type { Map as MlMap, Marker as MlMarker, Popup as MlPopup } from 'maplibr
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/cn';
+import { withBase } from '@/lib/site';
 
 export interface MapMarker {
   id: string;
@@ -88,7 +89,7 @@ export function LazyMap({
             if (cancelled || !containerRef.current) return;
             const ml = (lib as unknown as { default?: typeof import('maplibre-gl') }).default ?? lib;
             libRef.current = ml;
-            ml.setWorkerUrl('/vendor/maplibre-gl-worker.mjs');
+            ml.setWorkerUrl(withBase('/vendor/maplibre-gl-worker.mjs'));
             const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const map = new ml.Map({
               container: containerRef.current,

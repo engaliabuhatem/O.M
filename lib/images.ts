@@ -1,4 +1,5 @@
 import manifest from '@/content/image-manifest.json';
+import { withBase } from './site';
 
 export interface ImageMeta {
   width: number;
@@ -17,10 +18,10 @@ export function imageMeta(slug: string): ImageMeta {
 
 export function srcSet(slug: string, ext: 'avif' | 'webp'): string {
   const m = imageMeta(slug);
-  return m.sizes.map((w) => `/images/${slug}-${w}.${ext} ${w}w`).join(', ');
+  return m.sizes.map((w) => `${withBase(`/images/${slug}-${w}.${ext}`)} ${w}w`).join(', ');
 }
 
 export function imageSrc(slug: string, ext: 'avif' | 'webp' = 'webp', width?: number): string {
   const m = imageMeta(slug);
-  return `/images/${slug}-${width ?? m.width}.${ext}`;
+  return withBase(`/images/${slug}-${width ?? m.width}.${ext}`);
 }

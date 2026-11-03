@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { withBase } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'First Canadian O.M-LTD',
@@ -11,8 +12,8 @@ export default function RootRedirect() {
   return (
     <html lang="en">
       <head>
-        <meta httpEquiv="refresh" content="0; url=/en/" />
-        <link rel="canonical" href="/en/" />
+        <meta httpEquiv="refresh" content={`0; url=${withBase('/en/')}`} />
+        <link rel="canonical" href={withBase('/en/')} />
       </head>
       <body style={{ fontFamily: 'system-ui, sans-serif', padding: 24 }}>
         <p>

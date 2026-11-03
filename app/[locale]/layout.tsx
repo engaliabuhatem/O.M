@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import type { CSSProperties, ReactNode } from 'react';
-import { preload } from 'react-dom';
+import { ArabicFonts } from '@/components/ArabicFonts';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import type { Locale } from '@/content/types';
@@ -60,11 +60,6 @@ export default async function LocaleLayout({
 
   // Arabic pages use self-hosted Cairo + IBM Plex Sans Arabic (globals.css), preloaded here only for /ar.
   // English pages use next/font Barlow Condensed + Inter. Neither locale downloads the other's fonts.
-  if (isAr) {
-    preload('/fonts/cairo-arabic-wght.woff2', { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
-    preload('/fonts/cairo-latin-wght.woff2', { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
-    preload('/fonts/plex-arabic-400.woff2', { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
-  }
   const fontVars = isAr ? undefined : `${barlow.variable} ${inter.variable}`;
 
   return (
@@ -77,6 +72,7 @@ export default async function LocaleLayout({
           } as CSSProperties
         }
       >
+        {isAr ? <ArabicFonts /> : null}
         <NextIntlClientProvider messages={clientMessages}>
           <Header />
           <main id="main" tabIndex={-1} className="pt-[76px] outline-none">

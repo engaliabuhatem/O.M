@@ -27,6 +27,7 @@ Requirements: Node 20+ (tested on Node 24). Python 3 with Pillow is needed only 
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
+| `NEXT_PUBLIC_BASE_PATH` | Sub-path the site is served from, e.g. `/O.M` for GitHub Pages. Leave empty for a domain root | *(empty)* |
 | `NEXT_PUBLIC_SITE_URL` | Absolute URL used for canonical links, hreflang, sitemap, Open Graph and JSON-LD | `https://www.fc-om.com` |
 | `NEXT_PUBLIC_FORMSPREE_ENDPOINT` | e.g. `https://formspree.io/f/xxxxxxx`. If set, the contact form POSTs here. If empty, the form opens the visitor's email app with a pre-filled message to `global@fc-om.com` | *(empty: mailto fallback)* |
 
@@ -79,6 +80,16 @@ Stats on the home page (number of dams, buildings, roads, km, equipment units, l
 1. Import the repository in Vercel. The framework preset is detected as Next.js.
 2. Set `NEXT_PUBLIC_SITE_URL` (and optionally `NEXT_PUBLIC_FORMSPREE_ENDPOINT`) under Project → Settings → Environment Variables.
 3. Deploy. Because of `output: 'export'`, Vercel serves the static files from `out/`.
+
+### GitHub Pages
+
+Live at **https://engaliabuhatem.github.io/O.M/**. `.github/workflows/deploy-pages.yml` builds and publishes the site on every push to `main`. It sets `NEXT_PUBLIC_BASE_PATH=/O.M` and `NEXT_PUBLIC_SITE_URL=https://engaliabuhatem.github.io/O.M` automatically.
+
+One-time setup: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. Progress shows under the repo's **Actions** tab.
+
+To test the Pages build locally in Git Bash, use `MSYS_NO_PATHCONV=1 NEXT_PUBLIC_BASE_PATH=/O.M npm run build` (otherwise Git Bash rewrites `/O.M` into a Windows path).
+
+If you later attach a custom domain (e.g. `fc-om.com`) in the Pages settings, remove `NEXT_PUBLIC_BASE_PATH` from the workflow and set `NEXT_PUBLIC_SITE_URL` to the domain.
 
 ### Plain Nginx
 
