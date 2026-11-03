@@ -6,6 +6,8 @@ import { Link } from '@/i18n/navigation';
 import { NAV } from '@/lib/site';
 import { Logo } from './Logo';
 
+const DEVELOPER_URL = 'https://www.linkedin.com/in/ali-abu-hatem-93b13927b/';
+
 export async function Footer({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: 'footer' });
   const nav = await getTranslations({ locale, namespace: 'nav' });
@@ -67,9 +69,23 @@ export async function Footer({ locale }: { locale: Locale }) {
       </div>
 
       <div className="border-t border-white/10">
-        <p className="mx-auto max-w-[1440px] px-4 py-6 text-sm md:px-8">
-          © {year} {company.legalName}. {t('rights')}
-        </p>
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-1 px-4 py-4 text-sm md:flex-row md:items-center md:justify-between md:px-8">
+          <p className="py-2">
+            © {year} {company.legalName}. {t('rights')}
+          </p>
+          <p>
+            {t('developedBy')}{' '}
+            <a
+              href={DEVELOPER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center font-semibold text-white underline-offset-4 hover:text-brand-bright hover:underline"
+            >
+              {t('developer')}
+              <span className="sr-only"> {t('newTab')}</span>
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

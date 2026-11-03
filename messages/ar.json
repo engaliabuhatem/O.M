@@ -231,7 +231,10 @@
     "offices": "المكاتب",
     "links": "روابط سريعة",
     "rights": "جميع الحقوق محفوظة.",
-    "contact": "التواصل"
+    "contact": "التواصل",
+    "developedBy": "تطوير الموقع:",
+    "developer": "علي أبو حاتم",
+    "newTab": "(يفتح LinkedIn في نافذة جديدة)"
   },
   "common": {
     "readMore": "اعرف المزيد",

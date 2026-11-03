@@ -231,7 +231,10 @@
     "offices": "Offices",
     "links": "Quick links",
     "rights": "All rights reserved.",
-    "contact": "Contact"
+    "contact": "Contact",
+    "developedBy": "Website developed by",
+    "developer": "Ali Abu-Hatem",
+    "newTab": "(opens LinkedIn in a new tab)"
   },
   "common": {
     "readMore": "Learn more",
