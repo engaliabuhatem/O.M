@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "siteName": "First Canadian O.M-LTD",
+    "defaultTitle": "First Canadian O.M-LTD (FCOM) — Civil, Infrastructure & Building Contractor since 1988",
+    "defaultDescription": "FCOM is a civil, infrastructure and building contractor established in 1988, delivering dams, mountain roads and buildings across Yemen and the Middle East, with offices in Yemen, UAE, KSA and Canada.",
+    "home": {
+      "title": "Civil, Infrastructure & Building Contractor since 1988",
+      "description": "Dams, mountain roads and buildings across Yemen and the Middle East. 12 dam, 13 road and 15 building projects, backed by our own crushers, asphalt and concrete plants."
+    },
+    "about": {
+      "title": "About FCOM",
+      "description": "Established in 1988. Our mission, vision, core values and management systems: HSE, environmental, ESHS, QA/QC, sustainability and BIM."
+    },
+    "services": {
+      "title": "Services & Sectors",
+      "description": "Procurement, detailed engineering, construction, construction management, facilities management, O&M and BIM, across buildings, water, dams, ports, transportation and power."
+    },
+    "projects": {
+      "title": "Executed Projects",
+      "description": "Roads, dams and buildings executed by FCOM, with an interactive map of Yemen, survey coordinates and a sortable table view."
+    },
+    "equipment": {
+      "title": "Equipment & Plant Capacity",
+      "description": "234 equipment, plant and laboratory units across 36 categories, including 300 and 250 t/h crushers, a 180 t/h asphalt plant and 120 and 90 m³/h concrete plants."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Offices in Aden (HQ), Dubai, KSA and Oakville, Canada. Email global@fc-om.com."
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "equipment": "Equipment",
+    "contact": "Contact",
+    "cta": "Contact us",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "skip": "Skip to content",
+    "primary": "Primary",
+    "switchLang": "عربي",
+    "switchLangLabel": "اقرأ هذه الصفحة بالعربية"
+  },
+  "home": {
+    "eyebrow": "Civil · Infrastructure · Buildings",
+    "headline": "Building the infrastructure that holds communities together",
+    "headlineSince": "since 1988.",
+    "sub": "Dams, mountain roads and public buildings, delivered with our own crushers, asphalt and concrete plants and a fleet of 234 equipment units.",
+    "ctaPrimary": "View our projects",
+    "ctaSecondary": "Contact us",
+    "heroCaption": "Hugary rural road, Taiz, 8.1 km",
+    "stats": {
+      "label": "By the numbers",
+      "since": "Since",
+      "sinceSub": "Established",
+      "countries": "Countries",
+      "countriesSub": "Yemen · UAE · KSA · Canada",
+      "dams": "Dam projects",
+      "damsSub": "Earth, stone & concrete",
+      "buildings": "Building projects",
+      "buildingsSub": "Public & private",
+      "roads": "Road projects",
+      "roadsSub": "{km} km listed lengths",
+      "units": "Equipment & plant units",
+      "unitsSub": "36 categories",
+      "labs": "Integrated labs",
+      "labsSub": "Soil ×2 · concrete · asphalt"
+    },
+    "what": {
+      "label": "What we do",
+      "title": "Five fields of work, one in-house team",
+      "more": "All services"
+    },
+    "featured": {
+      "label": "Featured projects",
+      "title": "Proof on the ground",
+      "all": "All projects"
+    },
+    "capacity": {
+      "label": "Capacity",
+      "title": "Our own plants. Our own schedule.",
+      "text": "Our own crushing, asphalt and concrete plants, heavy machinery and workshops enable efficient execution of large-scale projects.",
+      "cta": "Full equipment list"
+    },
+    "systems": {
+      "label": "Systems you can trust",
+      "title": "Managed for quality, safety and sustainability",
+      "more": "Management systems"
+    },
+    "cta": {
+      "title": "Planning a project? Let's talk.",
+      "text": "Tell us about the scope and location of your project, or call the office nearest to you.",
+      "button": "Start a conversation"
+    }
+  },
+  "about": {
+    "label": "About us",
+    "title": "Contractors since 1988",
+    "coreTitle": "Core services",
+    "mission": "Mission",
+    "vision": "Vision",
+    "valuesLabel": "Core values",
+    "valuesTitle": "What we stand on",
+    "systemsLabel": "Management systems",
+    "systemsTitle": "How we manage every site",
+    "advantagesLabel": "Why FCOM",
+    "advantagesTitle": "What partners can count on",
+    "teamCaption": "FCOM site team"
+  },
+  "services": {
+    "label": "Expertise & Services",
+    "title": "From procurement to operation",
+    "lead": "With long and diverse experience, we offer a wide range of construction services, especially in civil and infrastructure projects.",
+    "jump": "Jump to",
+    "servicesLabel": "Services",
+    "sectorsLabel": "Sectors",
+    "sectorsTitle": "Where we work",
+    "activities": "Sectors of activity",
+    "fields": "Fields of work"
+  },
+  "projects": {
+    "label": "Executed projects",
+    "title": "Track record",
+    "lead": "Roads, dams and buildings executed by FCOM. The tables and photos below show some of our executed projects.",
+    "filters": {
+      "label": "Filter projects by type",
+      "all": "All",
+      "road": "Roads",
+      "dam": "Dams",
+      "building": "Buildings"
+    },
+    "views": {
+      "label": "View",
+      "cards": "Cards",
+      "table": "Table"
+    },
+    "count": "{count, plural, one {# project} other {# projects}}",
+    "mapTitle": "Project locations",
+    "mapNote": "Markers show every project with survey coordinates in the profile (UTM Zone 38N, WGS84).",
+    "mapLoading": "Loading map…",
+    "mapError": "The map could not be loaded. All projects are listed below.",
+    "mapLabel": "Interactive map of project locations in Yemen",
+    "type": {
+      "road": "Road",
+      "dam": "Dam",
+      "building": "Building"
+    },
+    "section": "Documented section",
+    "table": {
+      "caption": "Executed projects, sortable by column",
+      "no": "No.",
+      "name": "Project",
+      "type": "Type",
+      "location": "Location",
+      "detail": "Detail",
+      "length": "Length (km)",
+      "utm": "UTM 38N",
+      "sortBy": "Sort by {col}"
+    },
+    "showOnMap": "Show on map",
+    "photos": "{count, plural, one {# photo} other {# photos}}",
+    "noPhoto": "No photo in profile",
+    "viewCard": "View project card"
+  },
+  "equipment": {
+    "label": "Equipment capacity",
+    "title": "Plant and fleet we own",
+    "lead": "FCOM maintains extensive equipment, including plants, heavy machinery, instruments and workshops, for efficient execution of large-scale projects.",
+    "plantsLabel": "Key plants",
+    "plantsTitle": "Production on site",
+    "fleetLabel": "Fleet",
+    "fleetTitle": "Full equipment list",
+    "fleetLead": "Every row of the company's equipment table, with quantities as listed.",
+    "total": "Total",
+    "units": "units",
+    "groupTotal": "Group total",
+    "qty": "Qty",
+    "item": "Equipment / plant",
+    "grandTotal": "{units} units across {rows} equipment categories",
+    "photosTitle": "Part of the fleet"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Talk to our team",
+    "lead": "Reach the office nearest to you, or send us your project details below.",
+    "officesLabel": "Offices",
+    "hq": "Headquarters",
+    "tel": "Tel",
+    "mob": "Mob",
+    "email": "Email",
+    "formTitle": "Project enquiry",
+    "mapTitle": "Headquarters: Airport Zone, Khormaksar, Aden",
+    "mapLabel": "Map showing FCOM headquarters in Khormaksar, Aden",
+    "form": {
+      "name": "Full name",
+      "company": "Company / organisation",
+      "email": "Email",
+      "phone": "Phone",
+      "projectType": "Project type",
+      "country": "Country",
+      "message": "Message",
+      "optional": "optional",
+      "select": "Select…",
+      "types": {
+        "roads": "Roads & highways",
+        "dams": "Dams & water structures",
+        "buildings": "Buildings & structures",
+        "networks": "Infrastructure networks",
+        "power": "Power, solar & MEP",
+        "services": "Engineering / management services",
+        "other": "Other"
+      },
+      "submit": "Send enquiry",
+      "sending": "Sending…",
+      "success": "Thank you. Your enquiry has been sent. We will reply to {email}.",
+      "successMailto": "Your email app should now open with the message ready to send to global@fc-om.com.",
+      "error": "Something went wrong and your enquiry was not sent. Please try again or email global@fc-om.com.",
+      "errors": {
+        "required": "This field is required.",
+        "email": "Enter a valid email address, e.g. name@company.com.",
+        "phone": "Enter a valid phone number (digits, spaces, + and - only).",
+        "min": "Please write at least 20 characters."
+      },
+      "privacy": "We use your details only to respond to this enquiry."
+    }
+  },
+  "footer": {
+    "tagline": "Civil, infrastructure and building contractor since 1988.",
+    "offices": "Offices",
+    "links": "Quick links",
+    "rights": "All rights reserved.",
+    "contact": "Contact"
+  },
+  "common": {
+    "readMore": "Learn more",
+    "km": "km",
+    "governorate": "Governorate",
+    "close": "Close",
+    "openImage": "Photo",
+    "backToTop": "Back to top"
+  }
+}

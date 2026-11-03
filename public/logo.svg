@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 72" role="img" aria-labelledby="t"><title id="t">First Canadian O.M-LTD</title>
+<g fill="none" stroke="#2B2B2B" stroke-width="1.1">
+<path d="M12 40h6v20h-6z" fill="#fff"/>
+<path d="M13.5 41v19M15 41v19M16.5 41v19" stroke-width=".6"/>
+<path d="M26 52h66v8H26z" fill="#fff"/>
+<path d="M28 53v7M30.5 53v7M33 53v7M35.5 53v7M38 53v7M40.5 53v7M43 53v7M45.5 53v7M48 53v7M50.5 53v7M53 53v7M55.5 53v7M58 53v7M60.5 53v7M63 53v7M65.5 53v7M68 53v7M70.5 53v7M73 53v7M75.5 53v7M78 53v7M80.5 53v7M83 53v7M85.5 53v7M88 53v7" stroke-width=".55"/>
+<path d="M20 46h74v6H20z" fill="#fff"/>
+<path d="M18 14h24v32H18z" fill="#fff"/>
+<path d="M22 14a8 6 0 0 1 16 0"/>
+<path d="M18 17.2h24M18 20.4h24M18 23.6h24M18 26.8h24M18 30h24M18 33.2h24M18 36.4h24M18 39.6h24M18 42.8h24" stroke-width=".9"/>
+</g>
+<path fill="#00799E" fill-rule="evenodd" d="M44 10l42 34H44zm6.5 13.5v14.5h17.8z"/>
+<rect x="6" y="61" width="96" height="5" rx="1" fill="#00799E"/>
+</svg>

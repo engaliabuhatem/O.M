@@ -1,0 +1,288 @@
+@import 'tailwindcss';
+
+/* ——— Arabic fonts (self-hosted, downloaded only on pages that use them) ——— */
+@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url('/fonts/cairo-arabic-wght.woff2') format('woff2-variations'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: 'Cairo'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url('/fonts/cairo-latin-wght.woff2') format('woff2-variations'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/plex-arabic-400.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/plex-arabic-600.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/plex-latin-400.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/plex-latin-600.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* ——— Design tokens: "Engineered Precision" (sampled from the 2026 profile) ——— */
+:root {
+  --brand: #00799e; /* 4.97:1 on paper. Large text, CTAs, numbers */
+  --brand-deep: #005a76; /* 7.7:1 on paper, 6.9:1 on concrete. Small teal text, hover, footer band */
+  --brand-bright: #5cc6e6; /* teal for dark surfaces, 7.2:1 on ink */
+  --ink: #2b2b2b;
+  --ink-2: #1f2326; /* deepest dark band */
+  --steel: #4a5560; /* body on light, 7.6:1 */
+  --steel-light: #c5ccd2; /* body on ink, 10:1 */
+  --concrete: #f2f3f2;
+  --paper: #ffffff;
+  --line: #d9dddf;
+  --safety: #f26b1d; /* decorative only, never text */
+  --header-h: 76px;
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-bright: var(--brand-bright);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-steel: var(--steel);
+  --color-steel-light: var(--steel-light);
+  --color-concrete: var(--concrete);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --color-safety: var(--safety);
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), var(--font-body), ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Consolas, monospace;
+
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--steel);
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading), var(--font-body), sans-serif;
+    color: var(--ink);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3,
+  [dir='rtl'] h4 {
+    line-height: 1.3;
+  }
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--brand-bright);
+  }
+}
+
+@layer components {
+/* ——— Signature motif: set-square triangle pattern ——— */
+.tri-pattern {
+  position: relative;
+  isolation: isolate;
+}
+.tri-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48'%3E%3Cg fill='none' stroke='%2300799E' stroke-width='1.2'%3E%3Cpath d='M2 4v40h34z'/%3E%3Cpath d='M9 19v18h15z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 56px 48px;
+  opacity: 0.07;
+}
+.tri-pattern.on-dark::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1.2'%3E%3Cpath d='M2 4v40h34z'/%3E%3Cpath d='M9 19v18h15z'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.06;
+}
+[dir='rtl'] .tri-pattern::before {
+  transform: scaleX(-1);
+}
+
+/* ——— Blueprint grid & ruler ticks ——— */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.ruler-x {
+  height: 10px;
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to right, currentColor 1px, transparent 1px);
+  background-size:
+    64px 10px,
+    16px 5px;
+  background-repeat: repeat-x;
+  background-position:
+    0 0,
+    0 0;
+}
+.ruler-y {
+  width: 10px;
+  background-image:
+    linear-gradient(to bottom, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size:
+    10px 64px,
+    5px 16px;
+  background-repeat: repeat-y;
+}
+
+/* Corner ticks on image frames */
+.frame-ticks {
+  position: relative;
+}
+.frame-ticks::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--brand), var(--brand)) top left / 14px 1px no-repeat,
+    linear-gradient(var(--brand), var(--brand)) top left / 1px 14px no-repeat,
+    linear-gradient(var(--brand), var(--brand)) bottom right / 14px 1px no-repeat,
+    linear-gradient(var(--brand), var(--brand)) bottom right / 1px 14px no-repeat;
+}
+
+.label-spaced {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.8125rem;
+}
+[dir='rtl'] .label-spaced {
+  letter-spacing: 0;
+  font-size: 0.9375rem;
+}
+
+.mono-coord {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Image hover scale (transform only) */
+.img-zoom img {
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .group:hover .img-zoom img,
+  .img-zoom:hover img {
+    transform: scale(1.03);
+  }
+}
+}
+
+/* MapLibre popup + attribution polish */
+.maplibregl-popup-content {
+  border-radius: 2px !important;
+  padding: 0 !important;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.18) !important;
+  font-family: var(--font-body), sans-serif;
+}
+.maplibregl-popup-close-button {
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+  color: var(--ink);
+}
+.maplibregl-ctrl-attrib {
+  font-size: 11px;
+}
+.map-marker {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+.map-marker span {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+  transition: transform 150ms ease-out;
+}
+.map-marker:hover span,
+.map-marker:focus-visible span,
+.map-marker[aria-pressed='true'] span {
+  transform: scale(1.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hero headline: reveals once, transform only (keeps LCP text painted). */
+@keyframes hero-rise {
+  from {
+    transform: translateY(0.35em);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-line {
+    animation: hero-rise 300ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  }
+}
+
+/* Scroll reveal (components/Reveal.tsx) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal[data-reveal] {
+    transition:
+      opacity 240ms cubic-bezier(0.25, 1, 0.5, 1) var(--reveal-delay, 0ms),
+      transform 240ms cubic-bezier(0.25, 1, 0.5, 1) var(--reveal-delay, 0ms);
+  }
+  .reveal[data-reveal='pending'] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

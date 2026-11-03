@@ -1,0 +1,67 @@
+import {
+  BadgeCheck,
+  Boxes,
+  Building,
+  Building2,
+  ClipboardList,
+  Construction,
+  Cylinder,
+  DraftingCompass,
+  FlaskConical,
+  Globe2,
+  HardHat,
+  Layers,
+  Leaf,
+  Lightbulb,
+  Mountain,
+  Network,
+  PackageCheck,
+  PlugZap,
+  Recycle,
+  Route,
+  Scale,
+  ShieldCheck,
+  Shovel,
+  Truck,
+  Waves,
+  Wrench,
+  Zap,
+  type LucideProps,
+} from 'lucide-react';
+
+const ICONS = {
+  BadgeCheck,
+  Boxes,
+  Building,
+  Building2,
+  ClipboardList,
+  Construction,
+  Cylinder,
+  DraftingCompass,
+  FlaskConical,
+  Globe2,
+  HardHat,
+  Layers,
+  Leaf,
+  Lightbulb,
+  Mountain,
+  Network,
+  PackageCheck,
+  PlugZap,
+  Recycle,
+  Route,
+  Scale,
+  ShieldCheck,
+  Shovel,
+  Truck,
+  Waves,
+  Wrench,
+  Zap,
+} as const;
+
+export type IconName = keyof typeof ICONS;
+
+export function Icon({ name, ...props }: { name: string } & LucideProps) {
+  const Cmp = ICONS[name as IconName] ?? Boxes;
+  return <Cmp aria-hidden="true" focusable="false" {...props} />;
+}
