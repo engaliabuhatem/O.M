@@ -4,11 +4,12 @@ import { company, offices } from '@/content/company';
 import type { Locale } from '@/content/types';
 import { SITE_URL } from './site';
 
-type PageKey = 'home' | 'about' | 'services' | 'projects' | 'equipment' | 'contact';
+type PageKey = 'home' | 'about' | 'sectors' | 'services' | 'projects' | 'equipment' | 'contact';
 
 const PATHS: Record<PageKey, string> = {
   home: '/',
   about: '/about/',
+  sectors: '/sectors/',
   services: '/services/',
   projects: '/projects/',
   equipment: '/equipment/',
@@ -17,11 +18,16 @@ const PATHS: Record<PageKey, string> = {
 
 export const localeUrl = (locale: Locale, path: string) => `${SITE_URL}/${locale}${path === '/' ? '/' : path}`;
 
-export async function pageMetadata(locale: Locale, page: PageKey): Promise<Metadata> {
+/** `values` fill ICU placeholders in the description, so counts come from the data, not the copy. */
+export async function pageMetadata(
+  locale: Locale,
+  page: PageKey,
+  values?: Record<string, string | number>,
+): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'meta' });
   const path = PATHS[page];
   const title = page === 'home' ? t('defaultTitle') : `${t(`${page}.title`)} | FCOM`;
-  const description = t(`${page}.description`);
+  const description = t(`${page}.description`, values);
   const url = localeUrl(locale, path);
   return {
     title: { absolute: title },

@@ -278,3 +278,20 @@
     transform: translateY(16px);
   }
 }
+
+/* "Load more" on /projects: newly added cards fade in. Static under prefers-reduced-motion. */
+@keyframes batch-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .batch-in {
+    animation: batch-in 280ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  }
+}

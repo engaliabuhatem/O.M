@@ -5,9 +5,8 @@ import { CtaBand } from '@/components/CtaBand';
 import { Icon } from '@/components/Icon';
 import { Picture } from '@/components/Picture';
 import { SectionHeading } from '@/components/SectionHeading';
-import { Container, PageHero } from '@/components/ui';
-import { activitySectors, sectors } from '@/content/sectors';
-import { pillars, services } from '@/content/services';
+import { ButtonLink, Container, PageHero } from '@/components/ui';
+import { services } from '@/content/services';
 import type { Locale } from '@/content/types';
 import { cn } from '@/lib/cn';
 import { pageMetadata } from '@/lib/seo';
@@ -28,40 +27,16 @@ export default async function ServicesPage({ params }: Props) {
     <>
       <PageHero number="05" label={t('label')} title={t('title')} lead={t('lead')} />
 
-      {/* Fields of work + jump nav */}
-      <section className="border-b border-line bg-concrete" aria-labelledby="fields-title">
-        <Container className="py-12">
-          <h2 id="fields-title" className="label-spaced mb-6 text-brand-deep">
-            {t('fields')}
-          </h2>
-          <ol className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-5">
-            {pillars.map((p) => (
-              <li key={p.id} className="flex items-start gap-3 bg-concrete p-4">
-                <span className="font-display text-2xl font-extrabold text-brand-deep tabular">{p.no}</span>
-                <div>
-                  <p className="font-display text-lg font-bold text-ink uppercase rtl:normal-case">{p.title[locale]}</p>
-                  <p className="text-sm">{p.text[locale]}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <nav aria-label={t('jump')} className="mt-8">
+      {/* Jump nav */}
+      <section className="border-b border-line bg-concrete" aria-label={t('jump')}>
+        <Container className="py-10">
+          <nav aria-label={t('jump')}>
             <ul className="flex flex-wrap gap-2">
               {services.map((s) => (
                 <li key={s.slug}>
                   <a
                     href={`#${s.slug}`}
                     className="flex min-h-11 items-center border border-line bg-white px-4 text-sm font-semibold text-ink hover:border-brand hover:text-brand-deep"
-                  >
-                    {s.title[locale]}
-                  </a>
-                </li>
-              ))}
-              {sectors.map((s) => (
-                <li key={s.id}>
-                  <a
-                    href={`#${s.id}`}
-                    className="flex min-h-11 items-center border border-ink bg-ink px-4 text-sm font-semibold text-white hover:bg-brand-deep"
                   >
                     {s.title[locale]}
                   </a>
@@ -106,68 +81,11 @@ export default async function ServicesPage({ params }: Props) {
               </article>
             ))}
           </div>
+          <ButtonLink href="/sectors" variant="secondary" arrow className="mt-20">
+            {t('sectorsLink')}
+          </ButtonLink>
         </Container>
       </section>
-
-      {/* Sectors */}
-      {sectors.map((sec, si) => (
-        <section
-          key={sec.id}
-          id={sec.id}
-          aria-labelledby={`${sec.id}-title`}
-          className={cn('scroll-mt-20 py-20 md:py-28', si === 0 ? 'tri-pattern on-dark bg-ink text-white' : 'tri-pattern bg-concrete')}
-        >
-          <Container>
-            <SectionHeading
-              number={String(14 + si).padStart(2, '0')}
-              tone={si === 0 ? 'dark' : 'light'}
-              label={t('sectorsLabel')}
-              title={sec.title[locale]}
-              lead={sec.lead[locale]}
-              id={`${sec.id}-title`}
-            />
-            <div className={cn('grid gap-6', sec.sub.length > 2 ? 'md:grid-cols-2 xl:grid-cols-3' : 'md:grid-cols-2')}>
-              {sec.sub.map((sub) => (
-                <article
-                  key={sub.id}
-                  id={sub.id}
-                  className={cn('scroll-mt-28 p-6 md:p-8', si === 0 ? 'border border-white/15 bg-ink-2' : 'bg-white')}
-                >
-                  <h3 className={cn('text-2xl font-extrabold uppercase rtl:normal-case', si === 0 && 'text-white')}>{sub.title[locale]}</h3>
-                  <p className={cn('mt-2', si === 0 ? 'text-steel-light' : '')}>{sub.lead[locale]}</p>
-                  {sub.groups.map((g, gi) => (
-                    <div key={gi} className="mt-5">
-                      {g.title ? (
-                        <p className={cn('label-spaced mb-2', si === 0 ? 'text-brand-bright' : 'text-brand-deep')}>{g.title[locale]}</p>
-                      ) : null}
-                      <ul className="space-y-2">
-                        {g.items.map((it) => (
-                          <li key={it.en} className="flex gap-3">
-                            <Check className={cn('mt-1 size-4 shrink-0', si === 0 ? 'text-brand-bright' : 'text-brand')} aria-hidden="true" />
-                            <span className={si === 0 ? 'text-white' : 'text-ink'}>{it[locale]}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </article>
-              ))}
-            </div>
-            {si === 0 ? (
-              <div className="mt-12">
-                <h3 className="label-spaced mb-4 text-brand-bright">{t('activities')}</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {activitySectors.map((a) => (
-                    <li key={a.en} className="border border-white/25 px-4 py-2 text-white">
-                      {a[locale]}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </Container>
-        </section>
-      ))}
 
       <CtaBand locale={locale} />
     </>

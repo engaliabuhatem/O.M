@@ -1,83 +1,9 @@
 /**
- * Services — PDF chapters "Expertise & Services" through "BIM".
+ * Services — what the company offers. PDF chapters "Expertise & Services" through "BIM".
+ * Sectors (fields of work) live separately in content/sectors.ts.
  * Long paragraphs are condensed into a short lead + bullets; facts unchanged.
  */
 import type { L } from './types';
-
-/** The five "Field of Work" pillars from the Expertise & Services table. */
-export interface Pillar {
-  id: string;
-  no: string;
-  icon: 'Route' | 'Waves' | 'Building2' | 'Network' | 'Zap';
-  title: L;
-  text: L;
-  /** Section on /services this pillar links to. */
-  href: string;
-  image: string;
-}
-
-export const pillars: Pillar[] = [
-  {
-    id: 'roads',
-    no: '01',
-    icon: 'Route',
-    title: { en: 'Roads & Highways', ar: 'الطرق والطرق السريعة' },
-    text: {
-      en: 'Design, construction and maintenance of roads, highways and mountain routes.',
-      ar: 'تصميم وإنشاء وصيانة الطرق والطرق السريعة والطرق الجبلية.',
-    },
-    href: '/services#transportation',
-    image: 'grader-road-works',
-  },
-  {
-    id: 'dams',
-    no: '02',
-    icon: 'Waves',
-    title: { en: 'Dams & Water Structures', ar: 'السدود والمنشآت المائية' },
-    text: {
-      en: 'Concrete, earth and stone dams; canals, weirs, irrigation networks, water tanks and well drilling.',
-      ar: 'السدود الخرسانية والترابية والحجرية، والقنوات والحواجز المائية وشبكات الري وخزانات المياه وحفر الآبار.',
-    },
-    href: '/services#dams-irrigation',
-    image: 'hassan-dam-main-dyke',
-  },
-  {
-    id: 'buildings',
-    no: '03',
-    icon: 'Building2',
-    title: { en: 'Buildings & Structures', ar: 'المباني والمنشآت' },
-    text: {
-      en: 'Custom homes, villas, apartment complexes, office buildings, warehouses and large steel structures.',
-      ar: 'المنازل والفلل والمجمعات السكنية والمباني الإدارية والمستودعات والمنشآت المعدنية الكبيرة.',
-    },
-    href: '/services#buildings',
-    image: 'fcom-hq-aden',
-  },
-  {
-    id: 'networks',
-    no: '04',
-    icon: 'Network',
-    title: { en: 'Infrastructure Networks', ar: 'شبكات البنية التحتية' },
-    text: {
-      en: 'Sewerage networks, water supply networks and internal roads.',
-      ar: 'شبكات الصرف الصحي وشبكات إمدادات المياه والطرق الداخلية.',
-    },
-    href: '/services#water-services',
-    image: 'artil-city-internal-streets',
-  },
-  {
-    id: 'power-mep',
-    no: '05',
-    icon: 'Zap',
-    title: { en: 'Power, Solar & MEP', ar: 'الطاقة والطاقة الشمسية والأعمال الكهروميكانيكية' },
-    text: {
-      en: 'Solar system projects, electrical, mechanical and security works.',
-      ar: 'مشاريع أنظمة الطاقة الشمسية، والأعمال الكهربائية والميكانيكية وأعمال الأنظمة الأمنية.',
-    },
-    href: '/services#power-services',
-    image: 'fcom-hq-aden-interior',
-  },
-];
 
 export interface Service {
   slug: string;

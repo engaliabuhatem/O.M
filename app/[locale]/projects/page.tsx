@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { CtaBand } from '@/components/CtaBand';
 import { ProjectsExplorer } from '@/components/projects/ProjectsExplorer';
 import { Container, PageHero } from '@/components/ui';
-import { projects, tabled, tabledRoadKm } from '@/content/projects';
+import { projectCounts, projects, tabledRoadKm } from '@/content/projects';
 import type { Locale } from '@/content/types';
 import { pageMetadata } from '@/lib/seo';
 
@@ -21,9 +21,10 @@ export default async function ProjectsPage({ params }: Props) {
   const h = await getTranslations('home.stats');
 
   const summary = [
-    { n: tabled.roads.length, label: h('roads'), sub: h('roadsSub', { km: tabledRoadKm }) },
-    { n: tabled.dams.length, label: h('dams'), sub: h('damsSub') },
-    { n: tabled.buildings.length, label: h('buildings'), sub: h('buildingsSub') },
+    // Same source as the filter tabs and the list below, so the numbers always agree.
+    { n: projectCounts.road, label: h('roads'), sub: h('roadsSub', { km: tabledRoadKm }) },
+    { n: projectCounts.dam, label: h('dams'), sub: h('damsSub') },
+    { n: projectCounts.building, label: h('buildings'), sub: h('buildingsSub') },
   ];
 
   return (

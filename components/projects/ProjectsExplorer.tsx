@@ -2,24 +2,24 @@
 
 import { ArrowDown, ArrowUp, ArrowUpDown, LayoutGrid, MapPin, Table2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { LazyMap, type MapMarker } from '@/components/map/LazyMap';
 import { Picture } from '@/components/Picture';
 import { UtmLabel } from '@/components/ui';
 import type { ProjectType, ProjectWithGeo } from '@/content/projects';
 import type { Locale } from '@/content/types';
 import { cn } from '@/lib/cn';
+import { FILTERS, fromUrl, URL_VALUE, type Filter } from './filters';
 import { ProjectCard } from './ProjectCard';
 import { useQueryParam } from './useQueryParam';
 
-const FILTERS = ['all', 'road', 'dam', 'building'] as const;
-type Filter = (typeof FILTERS)[number];
-/** URL values are plural (?type=dams), matching the tab labels. */
-const URL_VALUE: Record<Exclude<Filter, 'all'>, string> = { road: 'roads', dam: 'dams', building: 'buildings' };
-const fromUrl = (v: string | null): Filter => {
-  const hit = (Object.entries(URL_VALUE) as [Exclude<Filter, 'all'>, string][]).find(([k, u]) => u === v || k === v);
-  return hit ? hit[0] : 'all';
-};
+/**
+ * Batch size for "Load more". 12 divides evenly into the 2-, 3- and 4-column grids (md / lg / xl),
+ * so every batch ends on a complete row.
+ */
+const PAGE_SIZE = 12;
+
+type Paging = { filter: Filter; limit: number; from: number | null };
 
 export const TYPE_COLOR: Record<ProjectType, string> = { road: '#00799E', dam: '#2B2B2B', building: '#F26B1D' };
 
@@ -34,6 +34,15 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
   const view = viewParam === 'table' ? 'table' : 'cards';
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [sort, setSort] = useState<{ key: SortKey; dir: 'ascending' | 'descending' }>({ key: 'no', dir: 'ascending' });
+  /**
+   * How many projects are shown, tied to the filter it was set for: any filter change (tab click,
+   * back/forward, ?type= link) starts again from the first batch, without an effect.
+   * `from` is the first index of the last appended batch (drives the fade-in and focus).
+   */
+  const [paging, setPaging] = useState<Paging>({ filter, limit: PAGE_SIZE, from: null });
+  const page: Paging = paging.filter === filter ? paging : { filter, limit: PAGE_SIZE, from: null };
+  const listRef = useRef<HTMLElement>(null);
+  const pendingFocus = useRef<{ index: number } | { id: string } | null>(null);
 
   const visible = useMemo(() => (filter === 'all' ? projects : projects.filter((p) => p.type === filter)), [projects, filter]);
 
@@ -72,10 +81,52 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- typeOrder is a constant literal
   }, [visible, sort, locale]);
 
+  const total = sorted.length;
+  const shown = sorted.slice(0, page.limit);
+  const remaining = total - shown.length;
+
   const setFilter = (f: Filter) => {
     setSelectedId(null);
+    setPaging({ filter: f, limit: PAGE_SIZE, from: null });
     setTypeParam(f === 'all' ? null : URL_VALUE[f]);
   };
+
+  const loadMore = () => {
+    pendingFocus.current = { index: page.limit };
+    setPaging({ filter, limit: page.limit + PAGE_SIZE, from: page.limit });
+  };
+
+  /** Map popup -> card: load the batch that holds the card if needed, then scroll to it. */
+  const revealCard = (id: string) => {
+    const idx = sorted.findIndex((p) => p.id === id);
+    if (idx < 0) return;
+    pendingFocus.current = { id };
+    setPaging(
+      idx >= page.limit
+        ? { filter, limit: Math.ceil((idx + 1) / PAGE_SIZE) * PAGE_SIZE, from: page.limit }
+        : { ...page },
+    );
+  };
+
+  // Runs once the new batch is in the DOM. Focus moves to the first new item so keyboard and
+  // screen-reader users carry on where they were; preventScroll keeps the viewport still.
+  useEffect(() => {
+    const target = pendingFocus.current;
+    if (!target) return;
+    pendingFocus.current = null;
+    if ('index' in target) {
+      listRef.current?.querySelector<HTMLElement>(`[data-index="${target.index}"]`)?.focus({ preventScroll: true });
+    } else {
+      const el = document.getElementById(`project-${target.id}`);
+      el?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      });
+      el?.closest<HTMLElement>('[data-index]')?.focus({ preventScroll: true });
+    }
+  }, [paging]);
+
+  const isNew = (i: number) => page.from !== null && i >= page.from;
 
   const showOnMap = useCallback((id: string) => {
     setSelectedId(id);
@@ -106,7 +157,13 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
           <p className="mt-1 text-sm text-ink">{p.detail[locale]}</p>
           {p.utm ? <UtmLabel e={p.utm.e} n={p.utm.n} className="mt-2 block text-steel" /> : null}
           {view === 'cards' ? (
-            <a href={`#project-${p.id}`} className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-brand-deep underline underline-offset-4">
+            <a
+              href={`#project-${p.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                revealCard(p.id);
+              }}
+              className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-brand-deep underline underline-offset-4">
               {t('viewCard')}
             </a>
           ) : null}
@@ -173,7 +230,7 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
           </div>
         </div>
         <p className="sr-only" aria-live="polite">
-          {t('count', { count: visible.length })}
+          {t('showing', { shown: shown.length, total })}
         </p>
       </div>
 
@@ -211,18 +268,35 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
         </p>
       </section>
 
-      <p className="mb-6 font-semibold text-ink">{t('count', { count: visible.length })}</p>
+      <p className="mb-6 font-semibold text-ink">{t('showing', { shown: shown.length, total })}</p>
 
       {view === 'cards' ? (
-        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {sorted.map((p) => (
-            <li key={p.id}>
+        <ul
+          id="projects-results"
+          ref={listRef as RefObject<HTMLUListElement>}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
+          {shown.map((p, i) => (
+            <li
+              key={p.id}
+              data-index={i}
+              tabIndex={-1}
+              className={cn('outline-brand focus-visible:outline-2 focus-visible:outline-offset-4', isNew(i) && 'batch-in')}
+              style={isNew(i) ? { animationDelay: `${Math.min(i - page.from!, 8) * 40}ms` } : undefined}
+            >
               <ProjectCard p={p} highlighted={p.id === selectedId} onShowOnMap={showOnMap} />
             </li>
           ))}
         </ul>
       ) : (
-        <div className="overflow-x-auto border border-line" tabIndex={0} role="region" aria-label={t('table.caption')}>
+        <div
+          id="projects-results"
+          ref={listRef as RefObject<HTMLDivElement>}
+          className="overflow-x-auto border border-line"
+          tabIndex={0}
+          role="region"
+          aria-label={t('table.caption')}
+        >
           <table className="w-full min-w-[880px] text-start text-sm">
             <caption className="sr-only">{t('table.caption')}</caption>
             <thead className="bg-ink text-white">
@@ -263,8 +337,16 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
               </tr>
             </thead>
             <tbody>
-              {sorted.map((p) => (
-                <tr key={p.id} className="border-t border-line odd:bg-white even:bg-concrete">
+              {shown.map((p, i) => (
+                <tr
+                  key={p.id}
+                  data-index={i}
+                  tabIndex={-1}
+                  className={cn(
+                    'border-t border-line outline-brand odd:bg-white even:bg-concrete focus-visible:outline-2 focus-visible:-outline-offset-2',
+                    isNew(i) && 'batch-in',
+                  )}
+                >
                   <td className="px-3 py-3 text-steel tabular">{p.no ?? '—'}</td>
                   <th scope="row" className="px-3 py-3 text-start font-semibold text-ink">
                     {p.name[locale]}
@@ -291,6 +373,28 @@ export function ProjectsExplorer({ projects }: { projects: ProjectWithGeo[] }) {
           </table>
         </div>
       )}
+
+      {/* [overflow-anchor:none] stops the browser from scroll-anchoring to the button, which would jump the page as rows are added. */}
+      <div className="mt-10 flex flex-col items-center gap-3 [overflow-anchor:none]">
+        <p className="text-sm text-steel" aria-hidden="true">
+          {t('showing', { shown: shown.length, total })}
+        </p>
+        <div aria-hidden="true" className="h-1 w-48 bg-line">
+          <div className="h-full bg-brand" style={{ width: `${total ? (shown.length / total) * 100 : 100}%` }} />
+        </div>
+        {remaining > 0 ? (
+          <button
+            type="button"
+            onClick={loadMore}
+            aria-label={t('loadMoreLabel', { count: Math.min(PAGE_SIZE, remaining), remaining })}
+            aria-controls="projects-results"
+            className="mt-2 inline-flex min-h-12 items-center gap-2 border-2 border-ink px-6 font-display text-lg font-bold tracking-wide text-ink uppercase transition-colors duration-150 hover:bg-ink hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand rtl:normal-case"
+          >
+            {t('loadMore')}
+            <ArrowDown className="size-5" aria-hidden="true" />
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 }

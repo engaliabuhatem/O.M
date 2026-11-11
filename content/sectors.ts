@@ -1,5 +1,97 @@
-/** Sectors — PDF chapters "Buildings Sector" and "Infrastructure". */
+/**
+ * Sectors — the fields the company works in. Kept separate from services (content/services.ts),
+ * which describe what the company offers.
+ *
+ *  - `sectors`: the five "Field of Work" rows of the PDF's Expertise & Services table. Each sector that has
+ *    executed projects names its `projectType`; project lists and counts are derived from content/projects.ts.
+ *  - `sectorChapters`: the PDF chapters "Buildings Sector" and "Infrastructure" (sector expertise detail).
+ *  - `activitySectors`: the "Sector of Activities" list.
+ */
+import { projects, type ProjectType, type ProjectWithGeo } from './projects';
 import type { L } from './types';
+
+export interface Sector {
+  id: string;
+  no: string;
+  icon: 'Route' | 'Waves' | 'Building2' | 'Network' | 'Zap';
+  title: L;
+  text: L;
+  image: string;
+  /** Project type whose executed projects belong to this sector. Omitted when none are listed in the profile. */
+  projectType?: ProjectType;
+  /** Anchor of the matching expertise block in `sectorChapters` (on /sectors). */
+  chapterAnchor: string;
+}
+
+export const sectors: Sector[] = [
+  {
+    id: 'roads',
+    no: '01',
+    icon: 'Route',
+    title: { en: 'Roads & Highways', ar: 'الطرق والطرق السريعة' },
+    text: {
+      en: 'Design, construction and maintenance of roads, highways and mountain routes.',
+      ar: 'تصميم وإنشاء وصيانة الطرق والطرق السريعة والطرق الجبلية.',
+    },
+    image: 'grader-road-works',
+    projectType: 'road',
+    chapterAnchor: 'transportation',
+  },
+  {
+    id: 'dams',
+    no: '02',
+    icon: 'Waves',
+    title: { en: 'Dams & Water Structures', ar: 'السدود والمنشآت المائية' },
+    text: {
+      en: 'Concrete, earth and stone dams; canals, weirs, irrigation networks, water tanks and well drilling.',
+      ar: 'السدود الخرسانية والترابية والحجرية، والقنوات والحواجز المائية وشبكات الري وخزانات المياه وحفر الآبار.',
+    },
+    image: 'hassan-dam-main-dyke',
+    projectType: 'dam',
+    chapterAnchor: 'dams-irrigation',
+  },
+  {
+    id: 'buildings',
+    no: '03',
+    icon: 'Building2',
+    title: { en: 'Buildings & Structures', ar: 'المباني والمنشآت' },
+    text: {
+      en: 'Custom homes, villas, apartment complexes, office buildings, warehouses and large steel structures.',
+      ar: 'المنازل والفلل والمجمعات السكنية والمباني الإدارية والمستودعات والمنشآت المعدنية الكبيرة.',
+    },
+    image: 'fcom-hq-aden',
+    projectType: 'building',
+    chapterAnchor: 'buildings-sector',
+  },
+  {
+    id: 'networks',
+    no: '04',
+    icon: 'Network',
+    title: { en: 'Infrastructure Networks', ar: 'شبكات البنية التحتية' },
+    text: {
+      en: 'Sewerage networks, water supply networks and internal roads.',
+      ar: 'شبكات الصرف الصحي وشبكات إمدادات المياه والطرق الداخلية.',
+    },
+    image: 'artil-city-internal-streets',
+    chapterAnchor: 'water-services',
+  },
+  {
+    id: 'power-mep',
+    no: '05',
+    icon: 'Zap',
+    title: { en: 'Power, Solar & MEP', ar: 'الطاقة والطاقة الشمسية والأعمال الكهروميكانيكية' },
+    text: {
+      en: 'Solar system projects, electrical, mechanical and security works.',
+      ar: 'مشاريع أنظمة الطاقة الشمسية، والأعمال الكهربائية والميكانيكية وأعمال الأنظمة الأمنية.',
+    },
+    image: 'fcom-hq-aden-interior',
+    chapterAnchor: 'power-services',
+  },
+];
+
+/** Executed projects of a sector, straight from the project data (never a hardcoded number). */
+export const sectorProjects = (s: Sector): ProjectWithGeo[] =>
+  s.projectType ? projects.filter((p) => p.type === s.projectType) : [];
 
 export interface ExpertiseGroup {
   title?: L;
@@ -13,16 +105,16 @@ export interface SubSector {
   groups: ExpertiseGroup[];
 }
 
-export interface Sector {
-  id: 'buildings' | 'infrastructure';
+export interface SectorChapter {
+  id: 'buildings-sector' | 'infrastructure';
   title: L;
   lead: L;
   sub: SubSector[];
 }
 
-export const sectors: Sector[] = [
+export const sectorChapters: SectorChapter[] = [
   {
-    id: 'buildings',
+    id: 'buildings-sector',
     title: { en: 'Buildings', ar: 'قطاع المباني' },
     lead: {
       en: 'Distinguished public and private buildings, each studied, analysed and engineered as a singular project — enduring, efficient and comfortable for people and their surroundings.',

@@ -5,15 +5,19 @@
     "defaultDescription": "FCOM is a civil, infrastructure and building contractor established in 1988, delivering dams, mountain roads and buildings across Yemen and the Middle East, with offices in Yemen, UAE, KSA and Canada.",
     "home": {
       "title": "Civil, Infrastructure & Building Contractor since 1988",
-      "description": "Dams, mountain roads and buildings across Yemen and the Middle East. 12 dam, 13 road and 15 building projects, backed by our own crushers, asphalt and concrete plants."
+      "description": "Dams, mountain roads and buildings across Yemen and the Middle East. {dams} dam, {roads} road and {buildings} building projects, backed by our own crushers, asphalt and concrete plants."
     },
     "about": {
       "title": "About FCOM",
       "description": "Established in 1988. Our mission, vision, core values and management systems: HSE, environmental, ESHS, QA/QC, sustainability and BIM."
     },
+    "sectors": {
+      "title": "Sectors",
+      "description": "Our fields of work: roads and highways, dams and water structures, buildings, infrastructure networks, and power, solar and MEP, with the executed projects in each sector."
+    },
     "services": {
-      "title": "Services & Sectors",
-      "description": "Procurement, detailed engineering, construction, construction management, facilities management, O&M and BIM, across buildings, water, dams, ports, transportation and power."
+      "title": "Services",
+      "description": "Procurement, detailed engineering, construction, construction management, facilities management, operation & maintenance and BIM."
     },
     "projects": {
       "title": "Executed Projects",
@@ -21,7 +25,7 @@
     },
     "equipment": {
       "title": "Equipment & Plant Capacity",
-      "description": "234 equipment, plant and laboratory units across 36 categories, including 300 and 250 t/h crushers, a 180 t/h asphalt plant and 120 and 90 m³/h concrete plants."
+      "description": "{units} equipment, plant and laboratory units across {rows} categories, including 300 and 250 t/h crushers, a 180 t/h asphalt plant and 120 and 90 m³/h concrete plants."
     },
     "contact": {
       "title": "Contact Us",
@@ -31,6 +35,7 @@
   "nav": {
     "home": "Home",
     "about": "About",
+    "sectors": "Sectors",
     "services": "Services",
     "projects": "Projects",
     "equipment": "Equipment",
@@ -47,7 +52,7 @@
     "eyebrow": "Civil · Infrastructure · Buildings",
     "headline": "Building the infrastructure that holds communities together",
     "headlineSince": "since 1988.",
-    "sub": "Dams, mountain roads and public buildings, delivered with our own crushers, asphalt and concrete plants and a fleet of 234 equipment units.",
+    "sub": "Dams, mountain roads and public buildings, delivered with our own crushers, asphalt and concrete plants and a fleet of {units} equipment units.",
     "ctaPrimary": "View our projects",
     "ctaSecondary": "Contact us",
     "heroCaption": "Hugary rural road, Taiz, 8.1 km",
@@ -62,16 +67,24 @@
       "buildings": "Building projects",
       "buildingsSub": "Public & private",
       "roads": "Road projects",
-      "roadsSub": "{km} km listed lengths",
+      "roadsSub": "{km} km in the road table",
       "units": "Equipment & plant units",
-      "unitsSub": "36 categories",
+      "unitsSub": "{rows} categories",
       "labs": "Integrated labs",
       "labsSub": "Soil ×2 · concrete · asphalt"
     },
-    "what": {
-      "label": "What we do",
+    "sectors": {
+      "label": "Sectors",
       "title": "Five fields of work, one in-house team",
-      "more": "All services"
+      "more": "Explore sector",
+      "projects": "{count, plural, =0 {No listed projects yet} one {# executed project} other {# executed projects}}",
+      "all": "All sectors"
+    },
+    "services": {
+      "label": "Services",
+      "title": "What we offer, from procurement to operation",
+      "more": "Learn more",
+      "all": "All services"
     },
     "featured": {
       "label": "Featured projects",
@@ -109,16 +122,27 @@
     "advantagesTitle": "What partners can count on",
     "teamCaption": "FCOM site team"
   },
+  "sectors": {
+    "label": "Sectors",
+    "title": "Where we work",
+    "lead": "Our fields of work, each with the projects we have executed in it.",
+    "overview": "Fields of work",
+    "jump": "Jump to sector",
+    "projectsTitle": "Executed projects in this sector",
+    "viewAll": "{count, plural, one {View the # project} other {View all # projects}}",
+    "noProjects": "The company profile does not list executed projects for this sector yet.",
+    "expertiseLink": "Sector expertise",
+    "chaptersLabel": "Sector expertise",
+    "activities": "Sectors of activity",
+    "servicesLink": "See the services we offer"
+  },
   "services": {
     "label": "Expertise & Services",
     "title": "From procurement to operation",
     "lead": "With long and diverse experience, we offer a wide range of construction services, especially in civil and infrastructure projects.",
     "jump": "Jump to",
     "servicesLabel": "Services",
-    "sectorsLabel": "Sectors",
-    "sectorsTitle": "Where we work",
-    "activities": "Sectors of activity",
-    "fields": "Fields of work"
+    "sectorsLink": "See the sectors we work in"
   },
   "projects": {
     "label": "Executed projects",
@@ -162,7 +186,10 @@
     "showOnMap": "Show on map",
     "photos": "{count, plural, one {# photo} other {# photos}}",
     "noPhoto": "No photo in profile",
-    "viewCard": "View project card"
+    "viewCard": "View project card",
+    "showing": "Showing {shown} of {total} projects",
+    "loadMore": "Load more",
+    "loadMoreLabel": "Load {count} more projects, {remaining} remaining"
   },
   "equipment": {
     "label": "Equipment capacity",

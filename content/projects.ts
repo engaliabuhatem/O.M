@@ -589,6 +589,16 @@ export const tabled = {
   buildings,
 };
 
+/**
+ * Project counts per type, computed from the data above. Use these for every counter on the site
+ * so headers, filters and stats always match the listed projects (no hardcoded numbers).
+ */
+export const projectCounts: Record<ProjectType, number> = {
+  road: projects.filter((p) => p.type === 'road').length,
+  dam: projects.filter((p) => p.type === 'dam').length,
+  building: projects.filter((p) => p.type === 'building').length,
+};
+
 /** Sum of the lengths given in the road table (rows 01–13). */
 export const tabledRoadKm = Number(tabled.roads.reduce((s, r) => s + (r.lengthKm ?? 0), 0).toFixed(1));
 

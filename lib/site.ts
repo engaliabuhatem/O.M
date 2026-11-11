@@ -12,6 +12,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.fc-om.
 export const NAV = [
   { href: '/', key: 'home' },
   { href: '/about', key: 'about' },
+  { href: '/sectors', key: 'sectors' },
   { href: '/services', key: 'services' },
   { href: '/projects', key: 'projects' },
   { href: '/equipment', key: 'equipment' },

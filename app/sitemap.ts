@@ -3,7 +3,7 @@ import { localeUrl } from '@/lib/seo';
 
 export const dynamic = 'force-static';
 
-const PAGES = ['/', '/about/', '/services/', '/projects/', '/equipment/', '/contact/'];
+const PAGES = ['/', '/about/', '/sectors/', '/services/', '/projects/', '/equipment/', '/contact/'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return PAGES.flatMap((path) =>

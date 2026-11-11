@@ -8,9 +8,10 @@ import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 import { Arrow, ButtonLink, Container, UtmLabel } from '@/components/ui';
 import { company } from '@/content/company';
-import { labCount, plants, totalUnits } from '@/content/equipment';
-import { featuredProjectIds, projects, tabled, tabledRoadKm } from '@/content/projects';
-import { pillars } from '@/content/services';
+import { equipment, labCount, plants, totalUnits } from '@/content/equipment';
+import { featuredProjectIds, projectCounts, projects, tabledRoadKm } from '@/content/projects';
+import { sectorProjects, sectors } from '@/content/sectors';
+import { services } from '@/content/services';
 import { systems } from '@/content/systems';
 import type { Locale } from '@/content/types';
 import { Link } from '@/i18n/navigation';
@@ -22,7 +23,7 @@ type Props = { params: Promise<{ locale: Locale }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata(locale, 'home');
+  return pageMetadata(locale, 'home', { dams: projectCounts.dam, roads: projectCounts.road, buildings: projectCounts.building });
 }
 
 export default async function HomePage({ params }: Props) {
@@ -34,10 +35,10 @@ export default async function HomePage({ params }: Props) {
   const stats = [
     { value: company.founded, label: t('stats.since'), sub: t('stats.sinceSub'), static: true },
     { value: company.countryStrip.length, label: t('stats.countries'), sub: t('stats.countriesSub') },
-    { value: tabled.dams.length, label: t('stats.dams'), sub: t('stats.damsSub') },
-    { value: tabled.buildings.length, label: t('stats.buildings'), sub: t('stats.buildingsSub') },
-    { value: tabled.roads.length, label: t('stats.roads'), sub: t('stats.roadsSub', { km: tabledRoadKm }) },
-    { value: totalUnits, label: t('stats.units'), sub: t('stats.unitsSub') },
+    { value: projectCounts.dam, label: t('stats.dams'), sub: t('stats.damsSub') },
+    { value: projectCounts.building, label: t('stats.buildings'), sub: t('stats.buildingsSub') },
+    { value: projectCounts.road, label: t('stats.roads'), sub: t('stats.roadsSub', { km: tabledRoadKm }) },
+    { value: totalUnits, label: t('stats.units'), sub: t('stats.unitsSub', { rows: equipment.length }) },
     { value: labCount, label: t('stats.labs'), sub: t('stats.labsSub') },
   ];
 
@@ -71,7 +72,7 @@ export default async function HomePage({ params }: Props) {
             <span className="hero-line block">{t('headline')}</span>
             <span className="hero-line block text-brand-bright [animation-delay:80ms]">{t('headlineSince')}</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-steel-light md:text-xl">{t('sub')}</p>
+          <p className="mt-6 max-w-xl text-lg text-steel-light md:text-xl">{t('sub', { units: totalUnits })}</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/projects" arrow>
               {t('ctaPrimary')}
@@ -123,12 +124,17 @@ export default async function HomePage({ params }: Props) {
         </Container>
       </section>
 
-      {/* ——— What we do ——— */}
-      <section aria-labelledby="what-title" className="py-20 md:py-28">
+      {/* ——— Sectors (fields of work) ——— */}
+      <section aria-labelledby="sectors-title" className="py-20 md:py-28">
         <Container>
-          <SectionHeading number="01" label={t('what.label')} title={t('what.title')} id="what-title" />
-          <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-6">
-            {pillars.map((p, i) => {
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading number="01" label={t('sectors.label')} title={t('sectors.title')} id="sectors-title" className="mb-0 md:mb-0" />
+            <ButtonLink href="/sectors" variant="text" arrow>
+              {t('sectors.all')}
+            </ButtonLink>
+          </div>
+          <ul className="mt-10 grid gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-6">
+            {sectors.map((p, i) => {
               const big = i < 2;
               return (
                 <Reveal
@@ -138,7 +144,7 @@ export default async function HomePage({ params }: Props) {
                   className={cn(big ? 'lg:col-span-3' : 'lg:col-span-2', i === 4 && 'md:col-span-2 lg:col-span-2')}
                 >
                   <Link
-                    href={p.href}
+                    href={`/sectors#${p.id}`}
                     className="group flex h-full flex-col border border-line bg-white transition-colors hover:border-brand"
                   >
                     {big ? (
@@ -158,8 +164,9 @@ export default async function HomePage({ params }: Props) {
                       </div>
                       <h3 className="mt-4 text-2xl font-extrabold uppercase rtl:normal-case">{p.title[locale]}</h3>
                       <p className="mt-2 flex-1">{p.text[locale]}</p>
+                      <p className="mt-4 text-sm font-semibold text-ink">{t('sectors.projects', { count: sectorProjects(p).length })}</p>
                       <span className="mt-5 inline-flex items-center gap-2 font-semibold text-brand-deep">
-                        {t('what.more')}
+                        {t('sectors.more')}
                         <Arrow className="size-4 transition-transform duration-150 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
                       </span>
                     </div>
@@ -171,11 +178,38 @@ export default async function HomePage({ params }: Props) {
         </Container>
       </section>
 
+      {/* ——— Services (what we offer) ——— */}
+      <section aria-labelledby="services-title" className="border-t border-line py-20 md:py-28">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading number="02" label={t('services.label')} title={t('services.title')} id="services-title" className="mb-0 md:mb-0" />
+            <ButtonLink href="/services" variant="text" arrow>
+              {t('services.all')}
+            </ButtonLink>
+          </div>
+          <ul className="mt-10 grid border-s border-t border-line sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+            {services.map((s, i) => (
+              <Reveal as="li" key={s.slug} delay={stagger(i)} className="border-e border-b border-line">
+                <Link href={`/services#${s.slug}`} className="group flex h-full flex-col p-6 transition-colors hover:bg-concrete md:p-7">
+                  <Icon name={s.icon} className="size-9 text-brand" strokeWidth={1.5} />
+                  <h3 className="mt-5 text-2xl font-extrabold uppercase rtl:normal-case">{s.title[locale]}</h3>
+                  <p className="mt-2 line-clamp-3 flex-1">{s.summary[locale]}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 font-semibold text-brand-deep">
+                    {t('services.more')}
+                    <Arrow className="size-4 transition-transform duration-150 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
       {/* ——— Featured projects ——— */}
       <section aria-labelledby="featured-title" className="tri-pattern bg-concrete py-20 md:py-28">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading number="02" label={t('featured.label')} title={t('featured.title')} id="featured-title" className="mb-0 md:mb-0" />
+            <SectionHeading number="03" label={t('featured.label')} title={t('featured.title')} id="featured-title" className="mb-0 md:mb-0" />
             <ButtonLink href="/projects" variant="text" arrow>
               {t('featured.all')}
             </ButtonLink>
@@ -220,7 +254,7 @@ export default async function HomePage({ params }: Props) {
       {/* ——— Capacity teaser ——— */}
       <section aria-labelledby="capacity-title" className="on-dark bg-ink-2 py-20 text-white md:py-28">
         <Container>
-          <SectionHeading number="03" tone="dark" label={t('capacity.label')} title={t('capacity.title')} lead={t('capacity.text')} id="capacity-title" />
+          <SectionHeading number="04" tone="dark" label={t('capacity.label')} title={t('capacity.title')} lead={t('capacity.text')} id="capacity-title" />
         </Container>
         <div className="mx-auto max-w-[1440px]">
           <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-8 lg:grid lg:grid-cols-5 lg:overflow-visible">
@@ -255,7 +289,7 @@ export default async function HomePage({ params }: Props) {
       {/* ——— Systems ——— */}
       <section aria-labelledby="systems-title" className="py-20 md:py-28">
         <Container>
-          <SectionHeading number="04" label={t('systems.label')} title={t('systems.title')} id="systems-title" />
+          <SectionHeading number="05" label={t('systems.label')} title={t('systems.title')} id="systems-title" />
           <ul className="grid border-s border-t border-line sm:grid-cols-2 lg:grid-cols-3">
             {systems.map((s, i) => (
               <Reveal as="li" key={s.id} delay={stagger(i)} className="border-e border-b border-line p-6 md:p-8">
