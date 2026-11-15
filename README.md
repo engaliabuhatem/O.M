@@ -97,7 +97,10 @@ One-time setup:
 | A | `@` | `185.199.109.153` |
 | A | `@` | `185.199.110.153` |
 | A | `@` | `185.199.111.153` |
-| CNAME | `www` | `engaliabuhatem.github.io.` |
+| A | `www` | `185.199.108.153` |
+| A | `www` | `185.199.109.153` |
+| A | `www` | `185.199.110.153` |
+| A | `www` | `185.199.111.153` |
 
 `www.om-gp.com` redirects to `om-gp.com` automatically. Progress shows under the repo's **Actions** tab.
 
