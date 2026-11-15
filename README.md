@@ -28,7 +28,7 @@ Requirements: Node 20+ (tested on Node 24). Python 3 with Pillow is needed only 
 | Variable | Purpose | Default |
 | --- | --- | --- |
 | `NEXT_PUBLIC_BASE_PATH` | Sub-path the site is served from, e.g. `/O.M` for GitHub Pages. Leave empty for a domain root | *(empty)* |
-| `NEXT_PUBLIC_SITE_URL` | Absolute URL used for canonical links, hreflang, sitemap, Open Graph and JSON-LD | `https://www.fc-om.com` |
+| `NEXT_PUBLIC_SITE_URL` | Absolute URL used for canonical links, hreflang, sitemap, Open Graph and JSON-LD | `https://om-gp.com` |
 | `NEXT_PUBLIC_FORMSPREE_ENDPOINT` | e.g. `https://formspree.io/f/xxxxxxx`. If set, the contact form POSTs here. If empty, the form opens the visitor's email app with a pre-filled message to `global@fc-om.com` | *(empty: mailto fallback)* |
 
 Copy `.env.example` to `.env.local` and fill these in. They're inlined at build time, so rebuild after changing them.
@@ -83,26 +83,36 @@ Stats on the home page (number of dams, buildings, roads, km, equipment units, l
 
 ### GitHub Pages
 
-Live at **https://engaliabuhatem.github.io/O.M/**. `.github/workflows/deploy-pages.yml` builds and publishes the site on every push to `main`. It sets `NEXT_PUBLIC_BASE_PATH=/O.M` and `NEXT_PUBLIC_SITE_URL=https://engaliabuhatem.github.io/O.M` automatically.
+Live at **https://om-gp.com/**. `.github/workflows/deploy-pages.yml` builds and publishes the site on every push to `main` with `NEXT_PUBLIC_SITE_URL=https://om-gp.com` and no base path. `public/CNAME` holds the custom domain.
 
-One-time setup: repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. Progress shows under the repo's **Actions** tab.
+One-time setup:
 
-To test the Pages build locally in Git Bash, use `MSYS_NO_PATHCONV=1 NEXT_PUBLIC_BASE_PATH=/O.M npm run build` (otherwise Git Bash rewrites `/O.M` into a Windows path).
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. **Settings → Pages → Custom domain:** `om-gp.com`, then tick **Enforce HTTPS** once the certificate is issued.
+3. DNS at Namecheap (**Domain List → Manage → Advanced DNS**), with every parking record removed:
 
-If you later attach a custom domain (e.g. `fc-om.com`) in the Pages settings, remove `NEXT_PUBLIC_BASE_PATH` from the workflow and set `NEXT_PUBLIC_SITE_URL` to the domain.
+| Type | Host | Value |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `engaliabuhatem.github.io.` |
+
+`www.om-gp.com` redirects to `om-gp.com` automatically. Progress shows under the repo's **Actions** tab.
 
 ### Plain Nginx
 
 ```bash
 npm ci && npm run build
-rsync -a --delete out/ user@server:/var/www/fc-om.com/
+rsync -a --delete out/ user@server:/var/www/om-gp.com/
 ```
 
 ```nginx
 server {
     listen 80;
-    server_name fc-om.com www.fc-om.com;
-    root /var/www/fc-om.com;
+    server_name om-gp.com www.om-gp.com;
+    root /var/www/om-gp.com;
     index index.html;
 
     # trailingSlash: true → every page is <route>/index.html
